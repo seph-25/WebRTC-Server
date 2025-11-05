@@ -7,6 +7,7 @@ const { setupSignaling } = require("./signaling");
 // ===== Environment Variables =====
 const PORT = parseInt(process.env.PORT, 10) || 8000;
 const NODE_ENV = process.env.NODE_ENV || "development";
+const HEARTBEAT_INTERVAL = parseInt(process.env.HEARTBEAT_INTERVAL, 10) || 30000;
 
 // 1. Crear el servidor WebSocket
 const wss = new WebSocket.Server({ noServer: true });
@@ -20,6 +21,7 @@ server.on("upgrade", (request, socket, head) => {
     wss.emit("connection", ws, request);
   });
 });
+
 
 // 4. Configurar toda la lógica de señalización en la instancia de WSS
 setupSignaling(wss, HEARTBEAT_INTERVAL);
